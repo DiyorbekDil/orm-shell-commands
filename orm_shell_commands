@@ -1,0 +1,79 @@
+>>> from book.models import BookModel, CommentModel, AuthorModel
+
+>>> BookModel.objects.all()
+<QuerySet [<BookModel: Vatandoshlik>]>
+
+>>> BookModel.objects.all()
+<QuerySet [<BookModel: Vatandoshlik>, <BookModel: Ufq>]>
+
+>>> BookModel.objects.filter(title='Ufq')
+<QuerySet [<BookModel: Ufq>]>
+
+>>> BookModel.objects.filter(cover='soft')
+<QuerySet [<BookModel: Ufq>]>
+
+>>> BookModel.objects.filter(cover='hard')
+<QuerySet [<BookModel: Vatandoshlik>]>
+
+>>> BookModel.objects.filter(title__startswith='U')
+<QuerySet [<BookModel: Ufq>]>
+
+>>> BookModel.objects.filter(title__startswith='Va')
+<QuerySet [<BookModel: Vatandoshlik>]>
+
+>>> BookModel.objects.filter(title__endswith='um')
+<QuerySet [<BookModel: Shum bola shum>]>
+
+>>> BookModel.objects.filter(cover__endswith='oft')
+<QuerySet [<BookModel: Ufq>]>
+
+>>> BookModel.objects.filter(cover__contains='of')
+<QuerySet [<BookModel: Ufq>]>
+
+>>> BookModel.objects.filter(cover__icontains='ar')
+<QuerySet [<BookModel: Vatandoshlik>, <BookModel: Shum bola shum>]>
+
+>>> BookModel.objects.filter(title__icontains='AnDOsh')
+<QuerySet [<BookModel: Vatandoshlik>]>
+
+>>> BookModel.objects.get(id=3)
+<BookModel: Shum bola shum>
+
+>>> CommentModel.objects.get(id=1)
+<CommentModel: theBest>
+
+>>> books = BookModel.objects.all()
+>>> books.order_by('title')
+<QuerySet [<BookModel: Shum bola shum>, <BookModel: Ufq>, <BookModel: Vatandoshlik>]>
+
+>>> authors = AuthorModel.objects.all()
+>>> authors.order_by('-first_name')
+<QuerySet [<AuthorModel: Yulo Vooglayd>, <AuthorModel: Said Ahmad>]>
+
+>>> author = AuthorModel(first_name='Olim', last_name='Olimov', age=56)
+>>> author.save()
+>>> AuthorModel.objects.all()
+<QuerySet [<AuthorModel: Yulo Vooglayd>, <AuthorModel: Said Ahmad>, <AuthorModel: Olim Olimov>]>
+
+>>> AuthorModel.objects.create(first_name='Vali', last_name='Aliyev', age=29)
+<AuthorModel: Vali Aliyev>
+>>> AuthorModel.objects.all()
+<QuerySet [<AuthorModel: Yulo Vooglayd>, <AuthorModel: Said Ahmad>, <AuthorModel: Olim Olimov>, <AuthorModel: Vali Aliyev>]>
+
+>>> AuthorModel.objects.all()
+<QuerySet [<AuthorModel: Yulo Vooglayd>, <AuthorModel: Said Ahmad>, <AuthorModel: Olim Olimov>, <AuthorModel: Vali Aliyev>]>
+>>> Authors = AuthorModel.objects.all()
+>>> author = Authors[0]
+>>> author.first_name = 'Aleksandr'
+>>> author.save()
+>>> author
+<AuthorModel: Aleksandr Vooglayd>
+>>> AuthorModel.objects.all()
+<QuerySet [<AuthorModel: Aleksandr Vooglayd>, <AuthorModel: Said Ahmad>, <AuthorModel: Olim Olimov>, <AuthorModel: Vali Aliyev>]>
+
+>>> BookModel.objects.all()
+<QuerySet [<BookModel: Vatandoshlik>, <BookModel: Ufq>, <BookModel: Shum bola shum>]>
+>>> BookModel.objects.filter(cover='soft').update(title='Qamar')
+1
+>>> BookModel.objects.all()
+<QuerySet [<BookModel: Vatandoshlik>, <BookModel: Qamar>, <BookModel: Shum bola shum>]>
